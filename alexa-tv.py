@@ -24,7 +24,7 @@ class device_handler(debounce_handler):
     """Publishes the on/off state requested,
        and the IP address of the Echo making the request.
     """
-    TRIGGERS = {"tv": 52000, "plex":52001, "volume": 52002, "netflix": 52003, "playback": 52004}
+    TRIGGERS = {"tv": 52000, "plex":52001, "volume": 52002, "netflix": 52003, "playback": 52004, "hulu": 52005, "youtube": 52006}
 
     def act(self, client_address, state, name):
         print "State", state, "on ", name, "from client @", client_address
@@ -34,12 +34,24 @@ class device_handler(debounce_handler):
         elif name == "tv" and state == False:
             os.system("python lgtv.py off")
             print "TV turned off!"
+        elif name == "hulu" and state == True:
+            os.system("python lgtv.py startApp hulu")
+            print "Launched Hulu"
+        elif name == "hulu" and state == False:
+            os.system("python lgtv.py closeApp hulu")
+            print "Closed Hulu"
         elif name == "plex" and state == True:
             os.system("python lgtv.py startApp cdp-30")
             print "Launched Plex"
         elif name == "plex" and state == False:
             os.system("python lgtv.py closeApp cdp-30")
             print "Closed Plex"
+        elif name == "youtube" and state == True:
+            os.system("python lgtv.py startApp youtube.leanback.v4")
+            print "Launched Youtube"
+        elif name == "youtube" and state == False:
+            os.system("python lgtv.py closeApp youtube.leanback.v4")
+            print "Closed Youtube"
         elif name == "netflix" and state == True:
             os.system("python lgtv.py startApp netflix")
             print "Launched Netflix"
@@ -47,8 +59,8 @@ class device_handler(debounce_handler):
             os.system("python lgtv.py closeApp netflix")
             print "Closed Netflix"
         elif name == "volume" and state == True:
-            os.system("python lgtv.py setVolume 44")
-            print "Volume set to FOURTYFOUR"
+            os.system("python lgtv.py setVolume 8")
+            print "Volume set to EIGHT"
         elif name == "volume" and state == False:
             os.system("python lgtv.py setVolume 0")
             print "Volume set to ZERO"
