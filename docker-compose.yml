@@ -1,0 +1,7 @@
+version: '3'
+services:
+  amazon-alexa-lg-tv:
+    build: .
+    network_mode: "host"
+    ports:
+     - "52000-52006:52000-52006"
